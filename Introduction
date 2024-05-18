@@ -1,0 +1,16 @@
+Univeristy's Timetable Manager & Availability Checker Application.
+
+The application, “Youni & Friends”, simplifies timetabling and integrates our everyday
+university experience with our personal life. The app achieves this by creating a platform
+where Sydney University’s students can find the optimal timetable that meets their
+personal wants and needs as well as finding time for social interactions. Users can enter
+their university units and connect with up to 3 friends and the app will then automatically
+generate a timetable that fulfills these factors. There are features available for users to
+customise their timetables, such as allocating break times for eating and study sessions,
+and colour coding to quickly differentiate units, enhancing organisation. This app benefits
+users by improving time management, increasing social interactions, and allowing for
+better coordination among university students, resulting in a more productive day. The
+tools that were incorporated in this project, including Figma and UML diagrams for
+designing, a priority table for functions and features documentation, and a database
+software to store the information. In the following points, the Software Development Life
+Cycle framework of the project is further discussed.
