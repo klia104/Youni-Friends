@@ -1,0 +1,26 @@
+---
+“Add” button:
+
+If(
+    IsBlank(
+        LookUp(
+            'user-info',
+            user_name = friend_username_email_input.Text || user_email = friend_username_email_input.Text
+        )
+    ),
+    Notify("User not found, please check the username or email and try again.", NotificationType.Error),
+    Notify("Request sent!", NotificationType.Success)
+)
+
+
+“Next” button:
+Navigate(AddTimeSlots1)
+
+“Accept request” button:
+Notify("Accept successfully!", NotificationType.Success)
+
+“Reject request” button:
+Notify("Friend request declined", NotificationType.Error)
+
+
+...
