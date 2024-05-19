@@ -1,0 +1,36 @@
+---
+
+
+“Login” button:
+
+If(
+    !IsBlank(
+        LookUp(
+            'user-info',
+            (user_name = login_username_email_input.Text || user_email = login_username_email_input.Text) && passwords = password_input.Text
+        )
+    ),
+    Set(gblUserNameEamil, login_username_email_input.Text);
+    Notify("Login Success", NotificationType.Success);
+    RemoveIf('current-user', true);
+    Patch(
+        'current-user',
+        Defaults('current-user'),
+        {
+            username: LookUp('user-info', (user_name = login_username_email_input.Text || user_email = login_username_email_input.Text)).user_name,
+            password: LookUp('user-info', (user_name = login_username_email_input.Text || user_email = login_username_email_input.Text)).passwords
+        }
+    );
+    Navigate(Home),
+    Notify("Login Fail", NotificationType.Error)
+)
+“Forgot Password” button:
+
+Navigate(Forgotpassword)
+
+“Sign up now” button:
+
+Navigate(Signup)
+
+
+...
