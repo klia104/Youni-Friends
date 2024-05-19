@@ -1,0 +1,40 @@
+---
+“Sign up” button:
+
+If(
+    IsBlank(
+        LookUp(
+            'user-info',
+            user_email = new_email_input.Text
+        )
+    ),
+    If(
+        IsBlank(
+            LookUp(
+                'user-info',
+                user_name = new_username_input.Text
+            )
+        ),
+        If(
+            new_password_input.Text = new_password_input_1.Text,
+            Patch(
+                'user-info',
+                Defaults('user-info'),
+                {
+                    user_email: new_email_input.Text,
+                    user_name: new_username_input.Text,
+                    passwords: new_password_input.Text
+                }
+            );
+            Notify("User registered successfully", NotificationType.Success);
+            Navigate(Login1),
+            Notify("Passwords do not match, please re-enter your passwords", NotificationType.Error)
+        ),
+        Notify("Username already exists, please choose a different one.", NotificationType.Error)
+    ),
+    Notify("Email already exists, please choose a different one.", NotificationType.Error)
+)
+
+
+
+...
