@@ -1,0 +1,22 @@
+---
+“Enter” button:
+
+If(
+    !IsBlank(
+        LookUp(
+            'your-units',
+            unit_code_1 = unit1code.Text ||
+            unit_code_2 = unit2code.Text ||
+            unit_code_3 = unit3code.Text ||
+            unit_code_4 = unit4code.Text ||
+            unit_code_5 = unit5code.Text ||
+            unit_code_6 = unit6code.Text
+        )
+    ),
+    Navigate(FindFriends),
+    Notify("Enter your units!", NotificationType.Error)
+)
+
+
+
+...
