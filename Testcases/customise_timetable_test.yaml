@@ -1,0 +1,87 @@
+---
+“Create Timetable” button:
+
+If(
+    !IsBlank(monday_from_input.Text) && !IsBlank(monday_to_input.Text) &&
+    !IsBlank(tuesday_from_input.Text) && !IsBlank(tuesday_to_input.Text) &&
+    !IsBlank(wednesday_from_input.Text) && !IsBlank(wednesday_to_input.Text) &&
+    !IsBlank(thursday_from_input.Text) && !IsBlank(thursday_to_input.Text) &&
+    !IsBlank(friday_from_input.Text) && !IsBlank(friday_to_input.Text) &&
+    !IsBlank(break_day_input.Text) && !IsBlank(break_from_input.Text) &&
+    !IsBlank(break_to_input.Text),
+
+    // Validate the time format and logical constraints
+    If(
+        And(
+            IsMatch(monday_from_input.Text, "\b([01]?[0-9]|2[0-3]):[0-5][0-9]\b"),
+            IsMatch(monday_to_input.Text, "\b([01]?[0-9]|2[0-3]):[0-5][0-9]\b"),
+            TimeValue(monday_from_input.Text) < TimeValue(monday_to_input.Text),
+            TimeValue(monday_from_input.Text) >= TimeValue("08:00"),
+            TimeValue(monday_to_input.Text) <= TimeValue("21:00"),
+
+            IsMatch(tuesday_from_input.Text, "\b([01]?[0-9]|2[0-3]):[0-5][0-9]\b"),
+            IsMatch(tuesday_to_input.Text, "\b([01]?[0-9]|2[0-3]):[0-5][0-9]\b"),
+            TimeValue(tuesday_from_input.Text) < TimeValue(tuesday_to_input.Text),
+            TimeValue(tuesday_from_input.Text) >= TimeValue("08:00"),
+            TimeValue(tuesday_to_input.Text) <= TimeValue("21:00"),
+
+            IsMatch(wednesday_from_input.Text, "\b([01]?[0-9]|2[0-3]):[0-5][0-9]\b"),
+            IsMatch(wednesday_to_input.Text, "\b([01]?[0-9]|2[0-3]):[0-5][0-9]\b"),
+            TimeValue(wednesday_from_input.Text) < TimeValue(wednesday_to_input.Text),
+            TimeValue(wednesday_from_input.Text) >= TimeValue("08:00"),
+            TimeValue(wednesday_to_input.Text) <= TimeValue("21:00"),
+
+            IsMatch(thursday_from_input.Text, "\b([01]?[0-9]|2[0-3]):[0-5][0-9]\b"),
+            IsMatch(thursday_to_input.Text, "\b([01]?[0-9]|2[0-3]):[0-5][0-9]\b"),
+            TimeValue(thursday_from_input.Text) < TimeValue(thursday_to_input.Text),
+            TimeValue(thursday_from_input.Text) >= TimeValue("08:00"),
+            TimeValue(thursday_to_input.Text) <= TimeValue("21:00"),
+
+            IsMatch(friday_from_input.Text, "\b([01]?[0-9]|2[0-3]):[0-5][0-9]\b"),
+            IsMatch(friday_to_input.Text, "\b([01]?[0-9]|2[0-3]):[0-5][0-9]\b"),
+            TimeValue(friday_from_input.Text) < TimeValue(friday_to_input.Text),
+            TimeValue(friday_from_input.Text) >= TimeValue("08:00"),
+            TimeValue(friday_to_input.Text) <= TimeValue("21:00")
+        ),
+
+        // All inputs are valid
+        Set(isValid, true);
+        Patch(
+            'customise-timetable-uni-time', 
+            Defaults('customise-timetable-uni-time'), 
+            {
+                monday_from: monday_from_input.Text,
+                monday_to: monday_to_input.Text,
+                tuesday_from: tuesday_from_input.Text,
+                tuesday_to: tuesday_to_input.Text,
+                wednesday_from: wednesday_from_input.Text,
+                wednesday_to: wednesday_to_input.Text,
+                thursday_from: thursday_from_input.Text,
+                thursday_to: thursday_to_input.Text,
+                friday_from: friday_from_input.Text,
+                friday_to: friday_to_input.Text
+            }
+        );
+        Patch(
+            'customise-timetable-break-time', 
+            Defaults('customise-timetable-break-time'), 
+            {
+                day: break_day_input.Text,
+                from: break_from_input.Text,
+                to: break_to_input.Text
+            }
+        );
+        Navigate(Timetablegenerating, ScreenTransition.Fade);
+        Notify("All times are valid and saved.")
+    ,
+        // Notify user of invalid input times
+        Notify("Ensure all times are in 24-hour format, from time is earlier than to time, and within 08:00 to 21:00.", NotificationType.Error);
+        Set(isValid, false)
+    ),
+    
+    // Notify user of missing inputs
+    Notify("Please fill all the time inputs.", NotificationType.Error);
+    Set(isValid, false)
+  )
+
+...
