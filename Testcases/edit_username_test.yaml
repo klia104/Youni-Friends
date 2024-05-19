@@ -1,0 +1,20 @@
+---
+“Save” button:
+
+If(
+    !IsBlank(
+        LookUp(
+            'user-info',
+            user_name = username_input.Text
+        )
+    ),
+    Notify("Username is taken", NotificationType.Error),
+    Patch(
+        'user-info',
+        LookUp('user-info', user_name = LookUp('current-user', true).username),
+        { user_name: username_input.Text }
+    );
+    Notify("Username successfully changed", NotificationType.Success)
+)
+
+...
